@@ -1,9 +1,9 @@
 ﻿using System.Runtime.Intrinsics.X86;
 using BenchmarkDotNet.Attributes;
 
-namespace IntrinsicsPlayground.Benchmarks.Misc
+namespace IntrinsicsPlayground.Benchmarks.Intrinsics
 {
-    public unsafe class LeadingZeroCount
+    public class LeadingZeroCount
     {
         // benchmarking LZCNT against its soft implementation in Decimal https://github.com/dotnet/corert/blob/a4c6faac2c31bffc6f13287c6cb8c6a7bb9667fd/src/System.Private.CoreLib/src/System/Decimal.DecCalc.cs#L2047
 
@@ -11,8 +11,13 @@ namespace IntrinsicsPlayground.Benchmarks.Misc
         public int[] LeadingZeroCount_Soft()
         {
             var results = new int[100000];
-            for (uint i = 1 /* see https://github.com/dotnet/corert/pull/5883#issuecomment-403617647 */ ; i < results.Length; i++)
+
+            // see https://github.com/dotnet/corert/pull/5883#issuecomment-403617647
+            for (uint i = 1; i < results.Length; i++)
+            {
                 results[i] = LeadingZeroCount_SoftStatic(i);
+            }
+
             return results;
         }
 
@@ -21,11 +26,14 @@ namespace IntrinsicsPlayground.Benchmarks.Misc
         {
             var results = new int[100000];
             for (uint i = 1; i < results.Length; i++)
-                results[i] = (int)Lzcnt.LeadingZeroCount(i);
+            {
+                results[i] = (int) Lzcnt.LeadingZeroCount(i);
+            }
+
             return results;
         }
 
-        public static int LeadingZeroCount_SoftStatic(uint value)
+        private static int LeadingZeroCount_SoftStatic(uint value)
         {
             var c = 1;
             if ((value & 0xFFFF0000) == 0)

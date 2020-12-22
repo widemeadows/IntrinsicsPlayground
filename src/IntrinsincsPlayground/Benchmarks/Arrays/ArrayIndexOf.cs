@@ -1,7 +1,7 @@
 ﻿using BenchmarkDotNet.Attributes;
 using IntrinsicsPlayground.Intrinsics.ArrayIntrinsics;
 
-namespace IntrinsicsPlayground.Benchmarks
+namespace IntrinsicsPlayground.Benchmarks.Arrays
 {
     public class ArrayIndexOf : ArrayBenchmarkBase
     {
@@ -18,15 +18,9 @@ namespace IntrinsicsPlayground.Benchmarks
         //}
 
         [Benchmark(Baseline = true)]
-        public int IndexOf_Sse41()
-        {
-            return ArrayIntrinsics.IndexOf_Sse41(ArrayOfInts, ArrayOfInts[ArrayOfInts.Length / 2]);
-        }
+        public int IndexOf_Sse41() => ArrayIntrinsics.IndexOf_Sse41(ArrayOfInts, ArrayOfInts[ArrayOfInts.Length / 2]);
 
         [Benchmark]
-        public int IndexOf_Sse41_aligned()
-        {
-            return ArrayIntrinsics.IndexOf_Sse41_aligned(ArrayOfInts, ArrayOfInts[ArrayOfInts.Length / 2]);
-        }
+        public int IndexOf_Sse41_aligned() => ArrayIntrinsics.IndexOf_Sse41_aligned(ArrayOfInts, ArrayOfInts[ArrayOfInts.Length / 2]);
     }
 }

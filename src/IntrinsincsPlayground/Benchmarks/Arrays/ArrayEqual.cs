@@ -2,27 +2,18 @@
 using BenchmarkDotNet.Attributes;
 using IntrinsicsPlayground.Intrinsics.ArrayIntrinsics;
 
-namespace IntrinsicsPlayground.Benchmarks
+namespace IntrinsicsPlayground.Benchmarks.Arrays
 {
     public class ArrayEqual : ArrayBenchmarkBase
     {
         [Benchmark]
-        public bool ArrayEqual_LINQ()
-        {
-            return Enumerable.SequenceEqual(ArrayOfFloats, ArrayOfFloats2);
-        }
+        public bool ArrayEqual_LINQ() => Enumerable.SequenceEqual(ArrayOfFloats, ArrayOfFloats2);
 
         [Benchmark]
-        public bool ArrayEqual_Simple()
-        {
-            return ArrayEqual_Simple(ArrayOfFloats, ArrayOfFloats2);
-        }
+        public bool ArrayEqual_Simple() => ArrayEqual_Simple(ArrayOfFloats, ArrayOfFloats2);
 
         [Benchmark(Baseline = true)]
-        public bool ArrayEqual_AVX2()
-        {
-            return ArrayIntrinsics.SequenceEqual_Avx(ArrayOfFloats, ArrayOfFloats2);
-        }
+        public bool ArrayEqual_AVX2() => ArrayIntrinsics.SequenceEqual_Avx(ArrayOfFloats, ArrayOfFloats2);
 
         public static bool ArrayEqual_Simple(float[] array1, float[] array2)
         {

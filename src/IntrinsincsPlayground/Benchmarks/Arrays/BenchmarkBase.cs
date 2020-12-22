@@ -2,11 +2,11 @@
 using System.Numerics;
 using BenchmarkDotNet.Attributes;
 
-namespace IntrinsicsPlayground.Benchmarks
+namespace IntrinsicsPlayground.Benchmarks.Arrays
 {
     [MemoryDiagnoser]
     [MarkdownExporter]
-    public class ArrayBenchmarkBase
+    public abstract class ArrayBenchmarkBase
     {
         public int[] ArrayOfInts { get; set; }
 

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq;
+using IntrinsicsPlayground.Benchmarks.Arrays;
 using IntrinsicsPlayground.Intrinsics.ArrayIntrinsics;
 using Xunit;
 
@@ -56,6 +57,38 @@ namespace IntrinsicsPlayground.Tests
                 {
                     var unsortedArray = sortedArray.Concat(sortedArray).ToArray();
                     Assert.False(ArrayIntrinsics.IsSorted_Avx2(unsortedArray));
+                }
+            }
+        }
+
+        [Fact]
+        public void ArrayIntrinsics_IsSorted_Simple()
+        {
+            for (var i = 0; i < 1024; i++)
+            {
+                var sortedArray = Enumerable.Range(0, i).ToArray();
+                Assert.True(ArrayIsSorted.IsSorted_Simple(sortedArray));
+
+                if (i > 2)
+                {
+                    var unsortedArray = sortedArray.Concat(sortedArray).ToArray();
+                    Assert.False(ArrayIsSorted.IsSorted_Simple(unsortedArray));
+                }
+            }
+        }
+
+        [Fact]
+        public void ArrayIntrinsics_IsSorted_Simple2()
+        {
+            for (var i = 0; i < 1024; i++)
+            {
+                var sortedArray = Enumerable.Range(0, i).ToArray();
+                Assert.True(ArrayIsSorted.IsSorted_Simple2(sortedArray));
+
+                if (i > 2)
+                {
+                    var unsortedArray = sortedArray.Concat(sortedArray).ToArray();
+                    Assert.False(ArrayIsSorted.IsSorted_Simple2(unsortedArray));
                 }
             }
         }

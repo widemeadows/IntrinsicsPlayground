@@ -79,7 +79,7 @@ namespace IntrinsicsPlayground.Intrinsics.ArrayIntrinsics
                 for (; i < count - 4; i += 4)
                 {
                     var curr = Sse2.LoadAlignedVector128(ptr + i);
-                    var mask = Sse41.CompareEqual(curr, elementVec);
+                    var mask = Sse2.CompareEqual(curr, elementVec);
                     if (Sse41.TestZ(mask, mask))
                     {
                         return FindIndex_Soft(array, i, element);

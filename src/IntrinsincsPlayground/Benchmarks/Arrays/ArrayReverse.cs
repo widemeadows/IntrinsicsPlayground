@@ -3,7 +3,7 @@ using System.Linq;
 using BenchmarkDotNet.Attributes;
 using IntrinsicsPlayground.Intrinsics.ArrayIntrinsics;
 
-namespace IntrinsicsPlayground.Benchmarks
+namespace IntrinsicsPlayground.Benchmarks.Arrays
 {
     public class ArrayReverse : ArrayBenchmarkBase
     {
