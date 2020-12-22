@@ -1,6 +1,7 @@
 ﻿using BenchmarkDotNet.Attributes;
+using IntrinsicsPlayground.Intrinsics.ArrayIntrinsics;
 
-namespace IntrinsicsPlayground
+namespace IntrinsicsPlayground.Benchmarks
 {
     public class ArrayIndexOf : ArrayBenchmarkBase
     {

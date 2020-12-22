@@ -1,18 +1,17 @@
 ﻿using System.Runtime.Intrinsics;
 using System.Runtime.Intrinsics.X86;
 
-namespace IntrinsicsPlayground
+namespace IntrinsicsPlayground.Intrinsics.ArrayIntrinsics
 {
     unsafe partial class ArrayIntrinsics
     {
         public static bool Contains_Avx2(int[] array, int element)
         {
-            if (array.Length < 1)
-                return false;
+            if (array.Length < 1) return false;
 
             fixed (int* ptr = &array[0])
             {
-                int i = 0;
+                var i = 0;
                 if (array.Length > 8 * 2)
                 {
                     var elementVec = Vector256.Create(element);
@@ -27,8 +26,7 @@ namespace IntrinsicsPlayground
 
                 for (; i < array.Length; i++)
                 {
-                    if (array[i] == element)
-                        return true;
+                    if (array[i] == element) return true;
                 }
             }
             return false;

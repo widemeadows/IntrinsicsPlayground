@@ -55,7 +55,7 @@ namespace IntrinsicsPlayground.Benchmarks.Misc
             _alreadySortedDesc = range.Reverse().ToArray();
 
             _nearlySortedAsc = _alreadySortedAsc.ToArray();
-            for (int i = 0; i < _nearlySortedAsc.Length - 1; i += 7)
+            for (var i = 0; i < _nearlySortedAsc.Length - 1; i += 7)
                 _nearlySortedAsc[i] = 0;
 
             _fullRandom = _staticRandomArray.Take(Count).ToArray();

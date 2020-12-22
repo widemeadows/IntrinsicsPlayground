@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Runtime.Intrinsics.X86;
 
-namespace IntrinsicsPlayground
+namespace IntrinsicsPlayground.Intrinsics.ArrayIntrinsics
 {
     unsafe partial class ArrayIntrinsics
     {
@@ -29,7 +29,7 @@ namespace IntrinsicsPlayground
                     var rightPtr = ptr + len - vecSize - i;
 
                     // load first 4 values and the last ones
-                    // shuffle vectors using _mm_shuffle_epi32 
+                    // shuffle vectors using _mm_shuffle_epi32
                     // and write them back
                     var leftV = Sse2.LoadVector128(leftPtr);
                     var rightV = Sse2.LoadVector128(rightPtr);
@@ -39,8 +39,11 @@ namespace IntrinsicsPlayground
                 }
             }
 
-            if (chunks * vecSize != len) //in case if there elements in the middle left unreversed
+            //in case if there elements in the middle left unreversed
+            if (chunks * vecSize != len)
+            {
                 Array.Reverse(array, chunks * vecSize, len - chunks * vecSize * 2);
+            }
         }
     }
 }

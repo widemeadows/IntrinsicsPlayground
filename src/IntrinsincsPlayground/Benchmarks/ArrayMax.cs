@@ -1,8 +1,9 @@
 ﻿using System.Linq;
 using BenchmarkDotNet.Attributes;
+using IntrinsicsPlayground.Intrinsics.ArrayIntrinsics;
 using JM.LinqFaster.SIMD;
 
-namespace IntrinsicsPlayground
+namespace IntrinsicsPlayground.Benchmarks
 {
     public class ArrayMax : ArrayBenchmarkBase
     {
@@ -32,8 +33,8 @@ namespace IntrinsicsPlayground
 
         public static int Max_Simple(int[] array)
         {
-            int max = int.MinValue;
-            for (int i = 0; i < array.Length; i++)
+            var max = int.MinValue;
+            for (var i = 0; i < array.Length; i++)
             {
                 var item = array[i];
                 if (item > max)

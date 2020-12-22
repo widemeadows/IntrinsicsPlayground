@@ -1,7 +1,8 @@
 ﻿using System.Linq;
 using BenchmarkDotNet.Attributes;
+using IntrinsicsPlayground.Intrinsics.ArrayIntrinsics;
 
-namespace IntrinsicsPlayground
+namespace IntrinsicsPlayground.Benchmarks
 {
     public class ArrayIsSorted : ArrayBenchmarkBase
     {
@@ -54,7 +55,7 @@ namespace IntrinsicsPlayground
             if (array.Length < 2)
                 return true;
 
-            for (int i = 0; i < array.Length - 1; i++)
+            for (var i = 0; i < array.Length - 1; i++)
             {
                 if (array[i] > array[i + 1])
                     return false;
@@ -69,7 +70,7 @@ namespace IntrinsicsPlayground
 
             // optimized by @consoleapp https://twitter.com/consoleapp/status/991380745234067458
             var current = array[0];
-            for (int i = 1; i < array.Length; i++)
+            for (var i = 1; i < array.Length; i++)
             {
                 var next = array[i];
                 if (current > next)

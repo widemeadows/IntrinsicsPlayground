@@ -2,24 +2,21 @@
 using System.Runtime.Intrinsics;
 using System.Runtime.Intrinsics.X86;
 
-namespace IntrinsicsPlayground
+namespace IntrinsicsPlayground.Intrinsics.ArrayIntrinsics
 {
     unsafe partial class ArrayIntrinsics
     {
         public static float Sum_Avx(float[] array)
         {
-            if (array.Length < 1)
-                return 0f;
-
             const int vecSize = 8;
+            if (array.Length < 1) return 0f;
 
             fixed (float* ptr = &array[0])
             {
-                if (array.Length < 8)
-                    return Sum_Soft(ptr, array.Length);
+                if (array.Length < 8) return Sum_Soft(ptr, array.Length);
 
-                int i = 0;
-                Vector256<float> sum = Vector256<float>.Zero;
+                var i = 0;
+                var sum = Vector256<float>.Zero;
                 {
                     for (; i <= array.Length - vecSize; i += vecSize)
                     {
@@ -41,10 +38,8 @@ namespace IntrinsicsPlayground
                 var result = stackalloc float[vecSize];
                 Avx.Store(result, sum);
 
-                float finalSum = result[0] + result[1] + result[2] + result[3] + result[4] + result[5] + result[6] + result[7];
-
-                if (i < array.Length)
-                    finalSum += Sum_Soft(ptr + i, array.Length - i);
+                var finalSum = result[0] + result[1] + result[2] + result[3] + result[4] + result[5] + result[6] + result[7];
+                if (i < array.Length) finalSum += Sum_Soft(ptr + i, array.Length - i);
 
                 return finalSum;
             }
@@ -53,9 +48,12 @@ namespace IntrinsicsPlayground
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         private static float Sum_Soft(float* array, int count)
         {
-            float sum = 0.0f;
-            for (int i = 0; i < count; i++)
+            var sum = 0.0f;
+            for (var i = 0; i < count; i++)
+            {
                 sum += *(array + i);
+            }
+
             return sum;
         }
     }

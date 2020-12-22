@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Runtime.Intrinsics.X86;
 using BenchmarkDotNet.Running;
+using IntrinsicsPlayground.Benchmarks;
 
 namespace IntrinsicsPlayground
 {

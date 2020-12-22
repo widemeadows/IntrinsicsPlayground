@@ -4,10 +4,10 @@ namespace IntrinsicsPlayground.Misc.Sorting
 {
     public static class DualPivotQuicksort
     {
-        private const int MAX_RUN_COUNT = 67;
-        private const int MAX_RUN_LENGTH = 33;
-        private const int QUICKSORT_THRESHOLD = 286;
-        private const int INSERTION_SORT_THRESHOLD = 47;
+        private const int MaxRunCount = 67;
+        private const int MaxRunLength = 33;
+        private const int QuicksortThreshold = 286;
+        private const int InsertionSortThreshold = 47;
 
         public static void Sort(int[] a) => sort(a, 0, a.Length -1, null, 0, 0);
 
@@ -17,10 +17,10 @@ namespace IntrinsicsPlayground.Misc.Sorting
 
         private static void sort(int[] a, int left, int right, bool leftmost)
         {
-            int length = right - left + 1;
+            var length = right - left + 1;
 
             // Use insertion sort on tiny arrays
-            if (length < INSERTION_SORT_THRESHOLD)
+            if (length < InsertionSortThreshold)
             {
                 if (leftmost)
                 {
@@ -31,7 +31,7 @@ namespace IntrinsicsPlayground.Misc.Sorting
                      */
                     for (int i = left, j = i; i < right; j = ++i)
                     {
-                        int ai = a[i + 1];
+                        var ai = a[i + 1];
                         while (ai < a[j])
                         {
                             a[j + 1] = a[j];
@@ -64,7 +64,7 @@ namespace IntrinsicsPlayground.Misc.Sorting
                      * sort, which is faster (in the context of Sort)
                      * than traditional implementation of insertion sort.
                      */
-                    for (int k = left; ++left <= right; k = ++left)
+                    for (var k = left; ++left <= right; k = ++left)
                     {
                         int a1 = a[k], a2 = a[left];
 
@@ -84,7 +84,7 @@ namespace IntrinsicsPlayground.Misc.Sorting
                         }
                         a[k + 1] = a2;
                     }
-                    int last = a[right];
+                    var last = a[right];
 
                     while (last < a[--right])
                     {
@@ -96,7 +96,7 @@ namespace IntrinsicsPlayground.Misc.Sorting
             }
 
             // Inexpensive approximation of length / 7
-            int seventh = (length >> 3) + (length >> 6) + 1;
+            var seventh = (length >> 3) + (length >> 6) + 1;
 
             /*
              * Sort five evenly spaced elements around (and including) the
@@ -105,23 +105,23 @@ namespace IntrinsicsPlayground.Misc.Sorting
              * these elements was empirically determined to work well on
              * a wide variety of inputs.
              */
-            int e3 = (int)((uint)(left + right) >> 1); // The midpoint
-            int e2 = e3 - seventh;
-            int e1 = e2 - seventh;
-            int e4 = e3 + seventh;
-            int e5 = e4 + seventh;
+            var e3 = (int)((uint)(left + right) >> 1); // The midpoint
+            var e2 = e3 - seventh;
+            var e1 = e2 - seventh;
+            var e4 = e3 + seventh;
+            var e5 = e4 + seventh;
 
             // Sort these elements using insertion sort
-            if (a[e2] < a[e1]) { int t = a[e2]; a[e2] = a[e1]; a[e1] = t; }
+            if (a[e2] < a[e1]) { var t = a[e2]; a[e2] = a[e1]; a[e1] = t; }
 
             if (a[e3] < a[e2])
             {
-                int t = a[e3]; a[e3] = a[e2]; a[e2] = t;
+                var t = a[e3]; a[e3] = a[e2]; a[e2] = t;
                 if (t < a[e1]) { a[e2] = a[e1]; a[e1] = t; }
             }
             if (a[e4] < a[e3])
             {
-                int t = a[e4]; a[e4] = a[e3]; a[e3] = t;
+                var t = a[e4]; a[e4] = a[e3]; a[e3] = t;
                 if (t < a[e2])
                 {
                     a[e3] = a[e2]; a[e2] = t;
@@ -130,7 +130,7 @@ namespace IntrinsicsPlayground.Misc.Sorting
             }
             if (a[e5] < a[e4])
             {
-                int t = a[e5]; a[e5] = a[e4]; a[e4] = t;
+                var t = a[e5]; a[e5] = a[e4]; a[e4] = t;
                 if (t < a[e3])
                 {
                     a[e4] = a[e3]; a[e3] = t;
@@ -143,8 +143,8 @@ namespace IntrinsicsPlayground.Misc.Sorting
             }
 
             // Pointers
-            int less = left;  // The index of the first element of center part
-            int great = right; // The index before the first element of right part
+            var less = left;  // The index of the first element of center part
+            var great = right; // The index before the first element of right part
 
             if (a[e1] != a[e2] && a[e2] != a[e3] && a[e3] != a[e4] && a[e4] != a[e5])
             {
@@ -153,8 +153,8 @@ namespace IntrinsicsPlayground.Misc.Sorting
                  * These values are inexpensive approximations of the first and
                  * second terciles of the array. Note that pivot1 <= pivot2.
                  */
-                int pivot1 = a[e2];
-                int pivot2 = a[e4];
+                var pivot1 = a[e2];
+                var pivot2 = a[e4];
 
                 /*
                  * The first and the last elements to be sorted are moved to the
@@ -191,9 +191,9 @@ namespace IntrinsicsPlayground.Misc.Sorting
                  * Pointer k is the first index of ?-part.
                  */
                 outer1:
-                for (int k = less - 1; ++k <= great;)
+                for (var k = less - 1; ++k <= great;)
                 {
-                    int ak = a[k];
+                    var ak = a[k];
                     if (ak < pivot1)
                     { // Move a[k] to left part
                         a[k] = a[less];
@@ -279,9 +279,9 @@ namespace IntrinsicsPlayground.Misc.Sorting
                      * Pointer k is the first index of ?-part.
                      */
                     outer2:
-                    for (int k = less - 1; ++k <= great;)
+                    for (var k = less - 1; ++k <= great;)
                     {
-                        int ak = a[k];
+                        var ak = a[k];
                         if (ak == pivot1)
                         { // Move a[k] to left part
                             a[k] = a[less];
@@ -331,7 +331,7 @@ namespace IntrinsicsPlayground.Misc.Sorting
                * Use the third of the five sorted elements as pivot.
                * This value is inexpensive approximation of the median.
                */
-                int pivot = a[e3];
+                var pivot = a[e3];
 
                 /*
                  * Partitioning degenerates to the traditional 3-way
@@ -353,13 +353,13 @@ namespace IntrinsicsPlayground.Misc.Sorting
                  *
                  * Pointer k is the first index of ?-part.
                  */
-                for (int k = less; k <= great; ++k)
+                for (var k = less; k <= great; ++k)
                 {
                     if (a[k] == pivot)
                     {
                         continue;
                     }
-                    int ak = a[k];
+                    var ak = a[k];
                     if (ak < pivot)
                     { // Move a[k] to left part
                         a[k] = a[less];
@@ -409,7 +409,7 @@ namespace IntrinsicsPlayground.Misc.Sorting
                  int[] work, int workBase, int workLen)
         {
             // Use Sort on small arrays
-            if (right - left < QUICKSORT_THRESHOLD)
+            if (right - left < QuicksortThreshold)
             {
                 sort(a, left, right, true);
                 return;
@@ -419,11 +419,11 @@ namespace IntrinsicsPlayground.Misc.Sorting
              * Index run[i] is the start of i-th run
              * (ascending or descending sequence).
              */
-            int[] run = new int[MAX_RUN_COUNT + 1];
-            int count = 0; run[0] = left;
+            var run = new int[MaxRunCount + 1];
+            var count = 0; run[0] = left;
 
             // Check if the array is nearly sorted
-            for (int k = left; k < right; run[count] = k)
+            for (var k = left; k < right; run[count] = k)
             {
                 if (a[k] < a[k + 1])
                 { // ascending
@@ -434,12 +434,12 @@ namespace IntrinsicsPlayground.Misc.Sorting
                     while (++k <= right && a[k - 1] >= a[k]) ;
                     for (int lo = run[count] - 1, hi = k; ++lo < --hi;)
                     {
-                        int t = a[lo]; a[lo] = a[hi]; a[hi] = t;
+                        var t = a[lo]; a[lo] = a[hi]; a[hi] = t;
                     }
                 }
                 else
                 { // equal
-                    for (int m = MAX_RUN_LENGTH; ++k <= right && a[k - 1] == a[k];)
+                    for (var m = MaxRunLength; ++k <= right && a[k - 1] == a[k];)
                     {
                         if (--m == 0)
                         {
@@ -453,7 +453,7 @@ namespace IntrinsicsPlayground.Misc.Sorting
                  * The array is not highly structured,
                  * use Sort instead of merge sort.
                  */
-                if (++count == MAX_RUN_COUNT)
+                if (++count == MaxRunCount)
                 {
                     sort(a, left, right, true);
                     return;
@@ -473,12 +473,12 @@ namespace IntrinsicsPlayground.Misc.Sorting
 
             // Determine alternation base for merge
             byte odd = 0;
-            for (int n = 1; (n <<= 1) < count; odd ^= 1) ;
+            for (var n = 1; (n <<= 1) < count; odd ^= 1) ;
 
             // Use or create temporary array b for merging
             int[] b;                 // temp array; alternates with a
             int ao, bo;              // array offsets from 'left'
-            int blen = right - left; // space needed for b
+            var blen = right - left; // space needed for b
             if (work == null || workLen < blen || workBase + blen > work.Length)
             {
                 work = new int[blen];
@@ -502,7 +502,7 @@ namespace IntrinsicsPlayground.Misc.Sorting
             // Merging
             for (int last; count > 1; count = last)
             {
-                for (int k = (last = 0) + 2; k <= count; k += 2)
+                for (var k = (last = 0) + 2; k <= count; k += 2)
                 {
                     int hi = run[k], mi = run[k - 1];
                     for (int i = run[k - 2], p = i, q = mi; i < hi; ++i)
@@ -525,8 +525,8 @@ namespace IntrinsicsPlayground.Misc.Sorting
                     ) ;
                     run[++last] = right;
                 }
-                int[] t = a; a = b; b = t;
-                int o = ao; ao = bo; bo = o;
+                var t = a; a = b; b = t;
+                var o = ao; ao = bo; bo = o;
             }
         }
     }

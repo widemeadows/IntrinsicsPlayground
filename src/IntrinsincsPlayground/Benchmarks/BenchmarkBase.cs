@@ -2,7 +2,7 @@
 using System.Numerics;
 using BenchmarkDotNet.Attributes;
 
-namespace IntrinsicsPlayground
+namespace IntrinsicsPlayground.Benchmarks
 {
     [MemoryDiagnoser]
     [MarkdownExporter]
