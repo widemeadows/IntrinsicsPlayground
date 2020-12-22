@@ -1,5 +1,4 @@
-﻿using System;
-using System.Runtime.CompilerServices;
+﻿using System.Runtime.CompilerServices;
 using System.Runtime.Intrinsics;
 using System.Runtime.Intrinsics.X86;
 
@@ -20,7 +19,7 @@ namespace IntrinsicsPlayground
                     return Sum_Soft(ptr, array.Length);
 
                 int i = 0;
-                Vector256<float> sum = Avx.SetZeroVector256<float>();
+                Vector256<float> sum = Vector256<float>.Zero;
                 {
                     for (; i <= array.Length - vecSize; i += vecSize)
                     {

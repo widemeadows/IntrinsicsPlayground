@@ -20,7 +20,8 @@ namespace IntrinsicsPlayground
                         Vector128<int> curr = Sse2.LoadVector128(ptr + i);
                         Vector128<int> next = Sse2.LoadVector128(ptr + i + 1);
                         Vector128<int> mask = Sse2.CompareGreaterThan(curr, next);
-                        if (!Sse41.TestAllZeros(mask, mask))
+
+                        if (!Sse41.TestZ(mask, mask))
                             return false;
                     }
 

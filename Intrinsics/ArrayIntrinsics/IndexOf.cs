@@ -10,7 +10,7 @@ namespace IntrinsicsPlayground
         {
             if (array.Length < 1)
                 return -1;
-            
+
             if (array.Length == 1)
                 return array[0];
 
@@ -19,7 +19,7 @@ namespace IntrinsicsPlayground
             {
                 if (array.Length > 8 * 2)
                 {
-                    var elementVec = Avx.SetAllVector256(element);
+                    var elementVec = Vector256.Create(element);
                     for (; i < array.Length - 8; i += 8) //16 for AVX512
                     {
                         var curr = Avx.LoadVector256(ptr + i);
@@ -55,7 +55,7 @@ namespace IntrinsicsPlayground
                     {
                         var curr = Sse2.LoadVector128(ptr + i);
                         var mask = Sse2.CompareEqual(curr, elementVec);
-                        if (!Sse41.TestAllOnes(mask))
+                        if (Sse41.TestZ(mask, mask)) // TODO: Verify, was: !Sse41.TestAllOnes(mask)
                         {
                             return FindIndex_Soft(array, i, element);
                         }
@@ -90,7 +90,7 @@ namespace IntrinsicsPlayground
                     {
                         var curr = Sse2.LoadAlignedVector128(ptr + i);
                         var mask = Sse41.CompareEqual(curr, elementVec);
-                        if (!Sse41.TestAllOnes(mask))
+                        if (Sse41.TestZ(mask, mask)) // TODO: Verify, was: !Sse41.TestAllOnes(mask)
                         {
                             return FindIndex_Soft(array, i, element);
                         }

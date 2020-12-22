@@ -4,15 +4,12 @@ using BenchmarkDotNet.Running;
 
 namespace IntrinsicsPlayground
 {
-    unsafe class Program
+    internal static class Program
     {
-        static void Main(string[] args)
+        public static void Main(string[] args)
         {
             if (!Sse41.IsSupported || !Avx2.IsSupported)
                 throw new NotSupportedException(":(");
-
-            if (Environment.GetEnvironmentVariable("COMPlus_TieredCompilation") != "0")
-                throw new Exception("Make sure Tiered JIT is disabled (enabled by default in .net core 3.0)");
 
             BenchmarkRunner.Run<ArrayIndexOf>();
 

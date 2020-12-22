@@ -17,7 +17,7 @@ namespace IntrinsicsPlayground
                 return Max_Soft(array, 0, float.MinValue);
 
             int i = 0;
-            Vector256<float> max = Avx.SetAllVector256(float.MinValue);
+            Vector256<float> max = Vector256.Create(float.MinValue);
             fixed (float* ptr = &array[0])
             {
                 for (; i <= array.Length - vecSize; i += vecSize) //16 for AVX512
@@ -68,7 +68,7 @@ namespace IntrinsicsPlayground
 
             lo128 = Sse.Max(lo128, hi128);
 
-            return Sse.ConvertToSingle(lo128);
+            return lo128.GetElement(0);
         }
     }
 }

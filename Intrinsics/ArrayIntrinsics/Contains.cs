@@ -1,4 +1,5 @@
-﻿using System.Runtime.Intrinsics.X86;
+﻿using System.Runtime.Intrinsics;
+using System.Runtime.Intrinsics.X86;
 
 namespace IntrinsicsPlayground
 {
@@ -14,7 +15,7 @@ namespace IntrinsicsPlayground
                 int i = 0;
                 if (array.Length > 8 * 2)
                 {
-                    var elementVec = Avx.SetAllVector256(element);
+                    var elementVec = Vector256.Create(element);
                     for (; i < array.Length - 8; i += 8) //16 for AVX512
                     {
                         var curr = Avx.LoadVector256(ptr + i);

@@ -26,7 +26,7 @@ namespace IntrinsicsPlayground
                 {
                     var vec1 = Avx.LoadVector256(ptr1 + i);
                     var vec2 = Avx.LoadVector256(ptr2 + i);
-                    var ce = Avx.Compare(vec1, vec2, FloatComparisonMode.NotEqualOrderedNonSignaling);
+                    var ce = Avx.Compare(vec1, vec2, FloatComparisonMode.OrderedNotEqualNonSignaling);
 
                     if (!Avx.TestZ(ce, ce))
                         return false;
