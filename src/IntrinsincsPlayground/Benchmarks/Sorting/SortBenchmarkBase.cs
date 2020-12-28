@@ -19,7 +19,7 @@ namespace IntrinsicsPlayground.Benchmarks.Sorting
             CurrentArray = CreateArray(Count);
         }
 
-        [Benchmark]
+        //[Benchmark]
         public int[] ArraySort()
         {
             var array = CurrentArray.ToArray();
@@ -35,15 +35,23 @@ namespace IntrinsicsPlayground.Benchmarks.Sorting
             return array;
         }
 
+        [Benchmark]
+        public int[] Quicksort3Way()
+        {
+            var array = CurrentArray.ToArray();
+            Misc.Sorting.Quicksort3Way.Sort(array);
+            return array;
+        }
+
         [Benchmark(Baseline = true)]
-        public int[] DualPivotQuicksort()
+        public int[] JavaSort()
         {
             var array = CurrentArray.ToArray();
             Misc.Sorting.JavaSort.Sort(array);
             return array;
         }
 
-        [Benchmark]
+        //[Benchmark]
         public int[] RadixSort()
         {
             var array = CurrentArray.ToArray();

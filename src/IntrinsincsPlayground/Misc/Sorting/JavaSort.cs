@@ -74,7 +74,7 @@ namespace IntrinsicsPlayground.Misc.Sorting
                     while (++k <= right && a[k - 1] >= a[k]) ;
                     for (int lo = run[count] - 1, hi = k; ++lo < --hi;)
                     {
-                        SwapElements(a, lo, hi);
+                        a.SwapElements(lo, hi);
                     }
                 }
                 else
@@ -610,8 +610,6 @@ namespace IntrinsicsPlayground.Misc.Sorting
                 }
             }
         }
-
-        private static void SwapElements(IList<int> a, int left, int right) => (a[left], a[right]) = (a[right], a[left]);
 
         private static void SwapValues<T>(ref T left, ref T right) => (left, right) = (right, left);
     }

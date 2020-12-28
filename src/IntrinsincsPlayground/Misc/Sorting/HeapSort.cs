@@ -1,16 +1,18 @@
+using System.Collections.Generic;
+
 namespace IntrinsicsPlayground.Misc.Sorting
 {
     public static class HeapSort
     {
-        public static void Sort(int[] array)
+        public static void Sort(IList<int> array)
         {
-            var heapSize = array.Length;
+            var heapSize = array.Count;
             for (var p = (heapSize - 1) / 2; p >= 0; p--)
             {
                 MaxHeapify(array, heapSize, p);
             }
 
-            for (var i = array.Length - 1; i > 0; i--)
+            for (var i = array.Count - 1; i > 0; i--)
             {
                 (array[i], array[0]) = (array[0], array[i]);
 
@@ -19,7 +21,7 @@ namespace IntrinsicsPlayground.Misc.Sorting
             }
         }
 
-        private static void MaxHeapify(int[] input, int heapSize, int index)
+        private static void MaxHeapify(IList<int> input, int heapSize, int index)
         {
             var right = (index + 1) * 2;
             var left = right - 1;

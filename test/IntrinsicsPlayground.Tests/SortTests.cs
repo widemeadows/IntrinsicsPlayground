@@ -63,7 +63,15 @@ namespace IntrinsicsPlayground.Tests
         }
 
         [Fact]
-        public void DualPivotQuicksort()
+        public void ThreeWayQuicksort()
+        {
+            var array = _unsortedArray.ToArray();
+            Misc.Sorting.Quicksort3Way.Sort(array);
+            array.Should().BeEquivalentTo(_sortedArray, options => options.WithStrictOrdering());
+        }
+
+        [Fact]
+        public void JavaSort()
         {
             var array = _unsortedArray.ToArray();
             Misc.Sorting.JavaSort.Sort(array);
