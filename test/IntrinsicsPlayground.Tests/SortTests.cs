@@ -66,7 +66,7 @@ namespace IntrinsicsPlayground.Tests
         public void DualPivotQuicksort()
         {
             var array = _unsortedArray.ToArray();
-            Misc.Sorting.DualPivotQuicksort.Sort(array);
+            Misc.Sorting.JavaSort.Sort(array);
             array.Should().BeEquivalentTo(_sortedArray, options => options.WithStrictOrdering());
         }
 

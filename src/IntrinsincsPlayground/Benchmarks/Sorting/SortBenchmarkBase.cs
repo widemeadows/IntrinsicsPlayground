@@ -39,7 +39,7 @@ namespace IntrinsicsPlayground.Benchmarks.Sorting
         public int[] DualPivotQuicksort()
         {
             var array = CurrentArray.ToArray();
-            Misc.Sorting.DualPivotQuicksort.Sort(array);
+            Misc.Sorting.JavaSort.Sort(array);
             return array;
         }
 

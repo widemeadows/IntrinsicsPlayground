@@ -119,7 +119,7 @@ namespace IntrinsicsPlayground.Tests
             }
         }
 
-        [Fact]
+        [Fact(Skip = "The array is required to be aligned, which currently isn't guaranteed")]
         public void ArrayIntrinsics_IndexOf_Sse41Aligned()
         {
             for (var i = 1; i < 1024; i++)
