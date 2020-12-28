@@ -1,4 +1,30 @@
-﻿using System;
+﻿// Copyright license of the original code:
+//
+//     Copyright (c) 2009, 2011, Oracle and/or its affiliates. All rights reserved.
+//     DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.
+//
+//     This code is free software; you can redistribute it and/or modify it
+//     under the terms of the GNU General Public License version 2 only, as
+//     published by the Free Software Foundation.  Oracle designates this
+//     particular file as subject to the "Classpath" exception as provided
+//     by Oracle in the LICENSE file that accompanied this code.
+//
+//     This code is distributed in the hope that it will be useful, but WITHOUT
+//     ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
+//     FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License
+//     version 2 for more details (a copy is included in the LICENSE file that
+//     accompanied this code).
+//
+//     You should have received a copy of the GNU General Public License version
+//     2 along with this work; if not, write to the Free Software Foundation,
+//     Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
+//
+//     Please contact Oracle, 500 Oracle Parkway, Redwood Shores, CA 94065 USA
+//     or visit www.oracle.com if you need additional information or have any
+//     questions.
+
+using System;
+using System.Collections.Generic;
 
 namespace IntrinsicsPlayground.Misc.Sorting
 {
@@ -9,13 +35,13 @@ namespace IntrinsicsPlayground.Misc.Sorting
         private const int QuicksortThreshold = 286;
         private const int InsertionSortThreshold = 47;
 
-        public static void Sort(int[] a) => sort(a, 0, a.Length -1, null, 0, 0);
+        public static void Sort(int[] a) => Sort(a, 0, a.Length -1, null, 0, 0);
 
         // The implementation was copied from
         // https://github.com/openjdk-mirror/jdk7u-jdk/blob/master/src/share/classes/java/util/DualPivotQuicksort.java
         // and converted to C# just for research purposes
 
-        private static void sort(int[] a, int left, int right, bool leftmost)
+        private static void Sort(IList<int> a, int left, int right, bool leftmost)
         {
             var length = right - left + 1;
 
@@ -237,8 +263,8 @@ namespace IntrinsicsPlayground.Misc.Sorting
                 a[right] = a[great + 1]; a[great + 1] = pivot2;
 
                 // Sort left and right parts recursively, excluding known pivots
-                sort(a, left, less - 2, leftmost);
-                sort(a, great + 2, right, false);
+                Sort(a, left, less - 2, leftmost);
+                Sort(a, great + 2, right, false);
 
                 /*
                  * If center part is too large (comprises > 4/7 of the array),
@@ -322,7 +348,7 @@ namespace IntrinsicsPlayground.Misc.Sorting
                 }
 
                 // Sort center part recursively
-                sort(a, less, great, false);
+                Sort(a, less, great, false);
 
             }
             else
@@ -400,18 +426,17 @@ namespace IntrinsicsPlayground.Misc.Sorting
                  * All elements from center part are equal
                  * and, therefore, already sorted.
                  */
-                sort(a, left, less - 1, leftmost);
-                sort(a, great + 1, right, false);
+                Sort(a, left, less - 1, leftmost);
+                Sort(a, great + 1, right, false);
             }
         }
 
-        static void sort(int[] a, int left, int right,
-                 int[] work, int workBase, int workLen)
+        private static void Sort(int[] a, int left, int right, int[] work, int workBase, int workLen)
         {
             // Use Sort on small arrays
             if (right - left < QuicksortThreshold)
             {
-                sort(a, left, right, true);
+                Sort(a, left, right, true);
                 return;
             }
 
@@ -443,7 +468,7 @@ namespace IntrinsicsPlayground.Misc.Sorting
                     {
                         if (--m == 0)
                         {
-                            sort(a, left, right, true);
+                            Sort(a, left, right, true);
                             return;
                         }
                     }
@@ -455,7 +480,7 @@ namespace IntrinsicsPlayground.Misc.Sorting
                  */
                 if (++count == MaxRunCount)
                 {
-                    sort(a, left, right, true);
+                    Sort(a, left, right, true);
                     return;
                 }
             }
