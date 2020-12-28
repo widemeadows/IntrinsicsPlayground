@@ -74,9 +74,7 @@ namespace IntrinsicsPlayground.Misc.Sorting
                     while (++k <= right && a[k - 1] >= a[k]) ;
                     for (int lo = run[count] - 1, hi = k; ++lo < --hi;)
                     {
-                        var t = a[lo];
-                        a[lo] = a[hi];
-                        a[hi] = t;
+                        SwapElements(a, lo, hi);
                     }
                 }
                 else
@@ -84,21 +82,17 @@ namespace IntrinsicsPlayground.Misc.Sorting
                     // equal
                     for (var m = MaxRunLength; ++k <= right && a[k - 1] == a[k];)
                     {
-                        if (--m == 0)
-                        {
-                            Sort(a, left, right, true);
-                            return;
-                        }
+                        if (--m != 0) continue;
+                        Sort(a, left, right, true);
+                        return;
                     }
                 }
 
                 // The array is not highly structured,
                 // use Sort instead of merge sort.
-                if (++count == MaxRunCount)
-                {
-                    Sort(a, left, right, true);
-                    return;
-                }
+                if (++count != MaxRunCount) continue;
+                Sort(a, left, right, true);
+                return;
             }
 
             // Check special cases
@@ -120,27 +114,27 @@ namespace IntrinsicsPlayground.Misc.Sorting
 
             // Use or create temporary array b for merging
             int[] b; // temp array; alternates with a
-            int ao, bo; // array offsets from 'left'
-            var blen = right - left; // space needed for b
-            if (work == null || workLen < blen || workBase + blen > work.Length)
+            int aOffset, bOffset; // array offsets from 'left'
+            var bLen = right - left; // space needed for b
+            if (work == null || workLen < bLen || workBase + bLen > work.Length)
             {
-                work = new int[blen];
+                work = new int[bLen];
                 workBase = 0;
             }
 
             if (odd == 0)
             {
-                Array.Copy(a, left, work, workBase, blen);
+                Array.Copy(a, left, work, workBase, bLen);
                 b = a;
-                bo = 0;
+                bOffset = 0;
                 a = work;
-                ao = workBase - left;
+                aOffset = workBase - left;
             }
             else
             {
                 b = work;
-                ao = 0;
-                bo = workBase - left;
+                aOffset = 0;
+                bOffset = workBase - left;
             }
 
             // Merging
@@ -152,13 +146,13 @@ namespace IntrinsicsPlayground.Misc.Sorting
                     var mi = run[k - 1];
                     for (int i = run[k - 2], p = i, q = mi; i < hi; ++i)
                     {
-                        if (q >= hi || p < mi && a[p + ao] <= a[q + ao])
+                        if (q >= hi || p < mi && a[p + aOffset] <= a[q + aOffset])
                         {
-                            b[i + bo] = a[p++ + ao];
+                            b[i + bOffset] = a[p++ + aOffset];
                         }
                         else
                         {
-                            b[i + bo] = a[q++ + ao];
+                            b[i + bOffset] = a[q++ + aOffset];
                         }
                     }
 
@@ -169,21 +163,15 @@ namespace IntrinsicsPlayground.Misc.Sorting
                 {
                     for (int i = right, lo = run[count - 1];
                         --i >= lo;
-                        b[i + bo] = a[i + ao]
+                        b[i + bOffset] = a[i + aOffset]
                     ) ;
                     run[++last] = right;
                 }
 
-                var t = a;
-                a = b;
-                b = t;
-
-                var o = ao;
-                ao = bo;
-                bo = o;
+                SwapValues(ref a, ref b);
+                SwapValues(ref aOffset, ref bOffset);
             }
         }
-
         private static void Sort(IList<int> a, int left, int right, bool leftmost)
         {
             var length = right - left + 1;
@@ -622,5 +610,9 @@ namespace IntrinsicsPlayground.Misc.Sorting
                 }
             }
         }
+
+        private static void SwapElements(IList<int> a, int left, int right) => (a[left], a[right]) = (a[right], a[left]);
+
+        private static void SwapValues<T>(ref T left, ref T right) => (left, right) = (right, left);
     }
 }
